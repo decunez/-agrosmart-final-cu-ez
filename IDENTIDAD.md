@@ -19,10 +19,10 @@ se busca en una tabla.
 
 | # | Parámetro | Cómo se obtiene | Mi valor |
 |:---:|-----------|-----------------|----------|
-| — | `NN` | los 2 últimos dígitos de mi cédula | 86 | 86
-| 1 | Nombre de la tabla | `tbl_productos_base_` + `NN` | |
-| 2 | Puerto | `81` + `NN` | |
-| 3 | Categoría | según el **último dígito** (tabla de abajo) | |
+| — | `NN` | los 2 últimos dígitos de mi cédula | 86 |
+| 1 | Nombre de la tabla | `tbl_productos_base_` + `NN` | tbl_productos_base_86 |
+| 2 | Puerto | `81` + `NN` | 8186 |
+| 3 | Categoría | según el **último dígito** (tabla de abajo) | Flores |
 | — | Audiencia para el prompt de IA | según la categoría | |
 
 **Tabla de categorías:**
