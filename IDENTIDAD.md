@@ -4,11 +4,11 @@
 > sincrónica** del examen. Toma menos de 5 minutos y es lo único con horario fijo:
 > después trabajas a tu ritmo hasta el plazo del día siguiente.
 
-- **Nombre completo:**
-- **Cédula:**
-- **NRC:**
+- **Nombre completo: Daniel Enrique Cuñez Paguay**
+- **Cédula: 1751073386**
+- **NRC: 30405**
 - **Nonce del examen:**            <!-- código publicado por el docente en la sesión -->
-- **Fecha y hora de inicio:**      <!-- formato: 2026-XX-XX HH:MM -->
+- **Fecha y hora de inicio: 2026-07-30 19:25**      <!-- formato: 2026-XX-XX HH:MM -->
 
 ---
 
