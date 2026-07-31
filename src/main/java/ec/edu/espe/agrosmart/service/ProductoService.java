@@ -1,60 +1,63 @@
 package ec.edu.espe.agrosmart.service;
 
+import ec.edu.espe.agrosmart.domain.ProductoRecord;
 import ec.edu.espe.agrosmart.entity.ProductoEntity;
-import ec.edu.espe.agrosmart.model.ProductoRecord;
+import ec.edu.espe.agrosmart.exception.ProductoNoEncontradoException;
 import ec.edu.espe.agrosmart.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
 
-    private final ProductoRepository repository;
+    private final ProductoRepository productoRepository;
 
-    public ProductoService(ProductoRepository repository) {
-        this.repository = repository;
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
     }
 
-    /**
-     * Mapea una Entidad JPA a un Record Inmutable.
-     * Transforma la cadena de correos separada por comas en una List<String>.
-     */
-    public ProductoRecord mapToRecord(ProductoEntity entity) {
-        List<String> correosList = (entity.getCorreosNotificacion() == null || entity.getCorreosNotificacion().isBlank())
-                ? Collections.emptyList()
-                : Arrays.stream(entity.getCorreosNotificacion().split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.toList());
-
-        return new ProductoRecord(
-                entity.getIdProducto(),
-                entity.getNombreProducto(),
-                entity.getPrecioUsd(),
-                entity.getStockKg(),
-                entity.getCategoria(),
-                correosList
-        );
+    // 1. Obtener productos comercializables reactivos
+    public Flux<ProductoRecord> obtenerProductosComercializables() {
+        return Mono.fromCallable(productoRepository::findAll)
+                .subscribeOn(Schedulers.boundedElastic())
+                .flatMapMany(Flux::fromIterable)
+                .filter(p -> "Flores".equalsIgnoreCase(p.getCategoria()))
+                .filter(p -> p.getPrecio() != null && p.getPrecio() > 0.0)
+                .filter(p -> p.getCorreosNotificacion() != null && !p.getCorreosNotificacion().isEmpty())
+                .map(this::mapToRecord);
     }
 
-    /**
-     * Pipeline Funcional (Streams API):
-     * 1. Carga todas las entidades.
-     * 2. Mapea a Record inmutable.
-     * 3. Filtra la categoría "Flores".
-     * 4. Filtra reglas de negocio: precio > 0 y al menos 1 correo de notificación.
-     */
-    public List<ProductoRecord> obtenerProductosProcesados() {
-        return repository.findAll().stream()
+    // 2. Buscar por ID
+    public Mono<ProductoRecord> buscarPorId(Long id) {
+        return Mono.fromCallable(() -> productoRepository.findById(id))
+                .subscribeOn(Schedulers.boundedElastic())
+                .flatMap(optional -> Mono.justOrEmpty(optional))
                 .map(this::mapToRecord)
-                .filter(p -> "Flores".equalsIgnoreCase(p.categoria()))
-                .filter(p -> p.precioUsd() != null && p.precioUsd().compareTo(BigDecimal.ZERO) > 0)
-                .filter(p -> p.correosNotificacion() != null && !p.correosNotificacion().isEmpty())
-                .collect(Collectors.toList());
+                .switchIfEmpty(Mono.error(new ProductoNoEncontradoException(id)));
+    }
+
+    // 3. Obtener productos procesados para el análisis de IA (filtrados)
+    public List<ProductoRecord> obtenerProductosProcesados() {
+        return productoRepository.findAll().stream()
+                .filter(p -> "Flores".equalsIgnoreCase(p.getCategoria()))
+                .filter(p -> p.getPrecio() != null && p.getPrecio() > 0.0)
+                .filter(p -> p.getCorreosNotificacion() != null && !p.getCorreosNotificacion().isEmpty())
+                .map(this::mapToRecord)
+                .toList();
+    }
+
+    private ProductoRecord mapToRecord(ProductoEntity entity) {
+        return new ProductoRecord(
+                entity.getId(),
+                entity.getNombre(),
+                entity.getCategoria(),
+                entity.getPrecio(),
+                entity.getStockKg(),
+                entity.getCorreosNotificacion()
+        );
     }
 }

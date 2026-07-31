@@ -1,53 +1,78 @@
 package ec.edu.espe.agrosmart.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
-@Table(name = "tbl_productos_base_86") // Nombre exacto para tu cédula 86
+@Table(name = "tbl_productos_base_86")
 public class ProductoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
-    private Long idProducto;
+    private Long id;
 
-    @Column(name = "nombre_producto", length = 120, nullable = false, unique = true)
-    private String nombreProducto;
+    @Column(name = "nombre_producto") // <--- Vincula 'nombre' con la columna de PostgreSQL
+    private String nombre;
 
-    @Column(name = "precio_usd", precision = 10, scale = 2)
-    private BigDecimal precioUsd;
-
-    @Column(name = "stock_kg", nullable = false)
-    private Integer stockKg;
-
-    @Column(name = "categoria", length = 40)
     private String categoria;
 
-    @Column(name = "correos_notificacion", length = 500)
-    private String correosNotificacion;
+    private Double precio;
 
-    public ProductoEntity() {}
+    @Column(name = "stock_kg")
+    private Integer stockKg;
 
-    public ProductoEntity(Long idProducto, String nombreProducto, BigDecimal precioUsd, Integer stockKg, String categoria, String correosNotificacion) {
-        this.idProducto = idProducto;
-        this.nombreProducto = nombreProducto;
-        this.precioUsd = precioUsd;
-        this.stockKg = stockKg;
-        this.categoria = categoria;
-        this.correosNotificacion = correosNotificacion;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> correosNotificacion;
+
+    public ProductoEntity() {
     }
 
-    public Long getIdProducto() { return idProducto; }
-    public void setIdProducto(Long idProducto) { this.idProducto = idProducto; }
-    public String getNombreProducto() { return nombreProducto; }
-    public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
-    public BigDecimal getPrecioUsd() { return precioUsd; }
-    public void setPrecioUsd(BigDecimal precioUsd) { this.precioUsd = precioUsd; }
-    public Integer getStockKg() { return stockKg; }
-    public void setStockKg(Integer stockKg) { this.stockKg = stockKg; }
-    public String getCategoria() { return categoria; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
-    public String getCorreosNotificacion() { return correosNotificacion; }
-    public void setCorreosNotificacion(String correosNotificacion) { this.correosNotificacion = correosNotificacion; }
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Integer getStockKg() {
+        return stockKg;
+    }
+
+    public void setStockKg(Integer stockKg) {
+        this.stockKg = stockKg;
+    }
+
+    public List<String> getCorreosNotificacion() {
+        return correosNotificacion;
+    }
+
+    public void setCorreosNotificacion(List<String> correosNotificacion) {
+        this.correosNotificacion = correosNotificacion;
+    }
 }

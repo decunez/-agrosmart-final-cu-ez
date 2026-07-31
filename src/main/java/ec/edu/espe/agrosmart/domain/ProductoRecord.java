@@ -1,4 +1,4 @@
-package ec.edu.espe.agrosmart.model;
+package ec.edu.espe.agrosmart.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 public record ProductoRecord(
         Long id,
         String nombre,
-        BigDecimal precioUsd,
-        Integer stockKg,
         String categoria,
+        Double precio,
+        Integer stockKg,
         List<String> correosNotificacion
 ) {}
