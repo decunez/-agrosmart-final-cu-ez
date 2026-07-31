@@ -17,10 +17,10 @@
 
 ## Datos
 
-- **Nombre:**
-- **Cédula:**
-- **NN (dos últimos dígitos):**
-- **Categoría asignada (según el último dígito):**
+- **Nombre: Daniel Enrique Cuñez Paguay**
+- **Cédula: 1751073386**
+- **NN (dos últimos dígitos): 86**
+- **Categoría asignada (según el último dígito): Flores**
 
 ---
 
