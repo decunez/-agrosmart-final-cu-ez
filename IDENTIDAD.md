@@ -7,7 +7,7 @@
 - **Nombre completo: Daniel Enrique Cuñez Paguay**
 - **Cédula: 1751073386**
 - **NRC: 30405**
-- **Nonce del examen:**            <!-- código publicado por el docente en la sesión -->
+- **Nonce del examen: AGS-XXXX-2026**            <!-- código publicado por el docente en la sesión -->
 - **Fecha y hora de inicio: 2026-07-30 19:25**      <!-- formato: 2026-XX-XX HH:MM -->
 
 ---
