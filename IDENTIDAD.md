@@ -51,9 +51,9 @@ se busca en una tabla.
 > haberlo entregado y C8 se califica en nivel 1.
 
 - **Enlace al video (5 min, cámara + pantalla):**
-- **Plataforma:**                  <!-- Drive institucional / OneDrive / YouTube no listado -->
+- **Plataforma: https://drive.google.com/file/d/1TNjR9zKkck3bV_6OPfuPFk-VnqPot0cA/view?usp=sharing**                  <!-- Drive institucional / OneDrive / YouTube no listado -->
 - **Acceso verificado en incógnito:**   ☐ Sí
-- **Duración real:**
+- **Duración real: 5:00**
 
 ---
 
@@ -63,4 +63,4 @@ Declaro que este repositorio es de mi autoría individual, que sustentaré oralm
 decisión de diseño que contiene, y que el historial de commits refleja fielmente el
 proceso de desarrollo que realicé.
 
-**Firma (nombre completo):**
+**Firma (Daniel Enrique Cuñez Paguay):**
